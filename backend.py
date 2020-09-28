@@ -21,11 +21,12 @@ def index():
 def ephemeral():
     """The basic endpoint which has no persistance"""
     if request.method == 'POST':
-        image = Image.open(request.files['image'])
+        try:
+            f = request.files['image']
+            image = Image.open(f)
+        except IOError:
+            return "not a valid image", 400
         return get_model_output(image)
-        # try:
-        # except PIL.UnidentifiedImageError:
-            # return "not a valid image"
     else:
         return redirect('/')
 
