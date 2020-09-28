@@ -1,7 +1,35 @@
-from flask import Flask
+from flask import Flask, request, redirect
+from PIL import Image
 
 app = Flask(__name__)
 
-@app.route('/api/ephemeral')
+@app.route('/')
+@app.route('/index')
+def index():
+    """A simple index which enables people to use the api"""
+    return '''
+    <!doctype html>
+    <title>Upload new File</title>
+    <h1>Upload new File</h1>
+    <form method=post enctype=multipart/form-data action="/api/ephemeral">
+      <input type=file name=image>
+      <input type=submit value=Upload>
+    </form>
+    '''
+
+@app.route('/api/ephemeral', methods=['GET', 'POST'])
 def ephemeral():
-    return "unimplemented"
+    """The basic endpoint which has no persistance"""
+    if request.method == 'POST':
+        image = Image.open(request.files['image'])
+        return get_model_output(image)
+        # try:
+        # except PIL.UnidentifiedImageError:
+            # return "not a valid image"
+    else:
+        return redirect('/')
+
+
+def get_model_output(image):
+    """A dummy stand-in for the model"""
+    return '$2+2=4$'
