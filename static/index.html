@@ -3,7 +3,7 @@
 <head>
 <script>
 const form = document.getElementById("image-upload-form");
-const url = "https://image-to-latex-backend.herokuapp.com/api/ephemeral";
+const url = "/api/ephemeral";
 function uploadImage() {
     console.log("got it");
     // Add the file to the image
@@ -11,7 +11,7 @@ function uploadImage() {
     const formData = new FormData();
     for (let i=0; i < files.length; i++) {
         let file = files[i];
-        formData.append('files[]', file);
+        formData.append('image', file);
     }
     fetch(
         url,
