@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script>
+const form = document.getElementById("image-upload-form");
+const url = "https://image-to-latex-backend.herokuapp.com/api/ephemeral";
+function uploadImage() {
+    console.log("got it");
+    // Add the file to the image
+    const files = document.querySelector('[type=file]').files;
+    const formData = new FormData();
+    for (let i=0; i < files.length; i++) {
+        let file = files[i];
+        formData.append('files[]', file);
+    }
+    fetch(
+        url,
+        {
+            method: 'POST',
+            body: formData,
+        }
+    ).then((response) => {
+        console.log("got response");
+        console.log(response);
+        document.getElementById('code').innerHTML = "Your LaTex Code Here";
+    });
+    return false;
+  }
+</script>
+</head>
+<body style="background-color:#F0FFFF;">
+<center>
+<h1>Math to Latex!</h1>
+
+<form id="image-upload-form" name="myForm" onsubmit="return uploadImage()" method="post">
+  <label for="img">Select image:</label>
+  <input type="file" id="img" name="image" accept="image/*">
+  <input type="submit">
+</form>
+
+<p> Your Latex Code: <span id="code"></span>
+</center>
+</body>
+</html>
