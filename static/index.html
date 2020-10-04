@@ -5,7 +5,6 @@
 const form = document.getElementById("image-upload-form");
 const url = "/api/ephemeral";
 function uploadImage() {
-    console.log("got it");
     // Add the file to the image
     const files = document.querySelector('[type=file]').files;
     const formData = new FormData();
@@ -19,11 +18,21 @@ function uploadImage() {
             method: 'POST',
             body: formData,
         }
-    ).then((response) => {
-        console.log("got response");
-        console.log(response);
-        document.getElementById('code').innerHTML = "Your LaTex Code Here";
-    });
+    ).then((response) => { 
+        if (response.status == 200) {
+            document.getElementById('error').innerHTML = "";
+            return response.text().then((response_text) => {
+                document.getElementById('code').innerHTML = response_text;
+            });
+        } else {
+            document.getElementById('code').innerHTML = "";
+            return response.text().then((response_text) => {
+                console.log(response_text);
+                document.getElementById('error').innerHTML = "Error: " + response_text;
+            });
+        }
+    })
+    ;
     return false;
   }
 </script>
@@ -39,6 +48,8 @@ function uploadImage() {
 </form>
 
 <p> Your Latex Code: <span id="code"></span>
+
+<div id="error"></div>
 </center>
 </body>
 </html>
