@@ -10,6 +10,8 @@ pylint = "*"
 flask = "*"
 pillow = "*"
 gunicorn = "*"
+torch = "*"
+numpy = "*"
 
 [requires]
 python_version = "3.8"
