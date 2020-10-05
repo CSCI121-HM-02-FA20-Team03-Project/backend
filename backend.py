@@ -1,5 +1,9 @@
 from flask import Flask, request, redirect
 from PIL import Image
+import numpy as np
+import torch
+
+from model.infer_model import InferModel
 
 app = Flask(__name__)
 
@@ -8,7 +12,7 @@ app = Flask(__name__)
 @app.route('/index.html')
 def index():
     """Redirect to where they should go"""
-    redirect('/static/index.html')
+    return redirect('/static/index.html')
 
 @app.route('/api/ephemeral', methods=['GET', 'POST'])
 def ephemeral():
@@ -25,7 +29,10 @@ def ephemeral():
     else:
         return redirect('/')
 
-
+learned_model = InferModel()
 def get_model_output(image):
-    """A dummy stand-in for the model"""
-    return '$2+2=4$'
+    """Call the model and get the result"""
+    in_data = torch.from_numpy(np.array(image.convert("L"))).type(torch.FloatTensor)
+    prediction = learned_model.infer(in_data)
+    print('Prediction: %s' % prediction)
+    return prediction
