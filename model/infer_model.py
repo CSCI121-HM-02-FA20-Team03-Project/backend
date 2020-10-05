@@ -11,9 +11,9 @@ import torch.utils.data as data
 import numpy as np
 from numpy import *
 
-from data_iterator import dataIterator
-from Attention_RNN import AttnDecoderRNN
-from Densenet_torchvision import densenet121
+from model.data_iterator import dataIterator
+from model.Attention_RNN import AttnDecoderRNN
+from model.Densenet_torchvision import densenet121
 
 from PIL import Image
 
@@ -27,7 +27,7 @@ import tkinter.font as tkfont
 
 class InferModel:
     def __init__(self):
-        self.dictionary = './dictionary.txt'
+        self.dictionary = './model/dictionary.txt'
         self.hidden_size = 256
         self.batch_size_t = 1
         self.maxlen = 100
@@ -68,8 +68,8 @@ class InferModel:
         self.encoder = torch.nn.DataParallel(encoder_pt)
         self.attn_decoder1 = torch.nn.DataParallel(attn_decoder1_pt)
 
-        self.encoder.load_state_dict(torch.load('./trained/encoder_v1.pkl', map_location=torch.device('cpu')))
-        self.attn_decoder1.load_state_dict(torch.load('./trained/attn_decoder_v1.pkl', map_location=torch.device('cpu')))
+        self.encoder.load_state_dict(torch.load('./model/trained/encoder_v1.pkl', map_location=torch.device('cpu')))
+        self.attn_decoder1.load_state_dict(torch.load('./model/trained/attn_decoder_v1.pkl', map_location=torch.device('cpu')))
         
         self.encoder.eval()
         self.attn_decoder1.eval()

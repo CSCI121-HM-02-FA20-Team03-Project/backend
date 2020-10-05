@@ -12,6 +12,8 @@ pillow = "*"
 gunicorn = "*"
 torch = "*"
 numpy = "*"
+requests = "*"
+matplotlib = "*"
 
 [requires]
 python_version = "3.8"
