@@ -17,14 +17,6 @@ from model.Densenet_torchvision import densenet121
 
 from PIL import Image
 
-import tkinter
-from tkinter import *
-from tkinter.filedialog import askopenfilename, asksaveasfilename
-from tkinter import messagebox
-
-import matplotlib.pyplot as plt
-import tkinter.font as tkfont
-
 class InferModel:
     def __init__(self):
         self.dictionary = './model/dictionary.txt'
