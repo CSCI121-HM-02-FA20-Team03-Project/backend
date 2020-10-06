@@ -8,6 +8,11 @@ function uploadImage() {
     // Add the file to the image
     const files = document.querySelector('[type=file]').files;
     const formData = new FormData();
+    
+    var image = document.getElementById('image');
+    //next line might be wrong
+	image.src = URL.createObjectURL(files[0]);
+    
     for (let i=0; i < files.length; i++) {
         let file = files[i];
         formData.append('image', file);
@@ -46,7 +51,7 @@ function uploadImage() {
   <input type="file" id="img" name="image" accept="image/*">
   <input type="submit">
 </form>
-
+<p> Your Image: <img id="image" width="200" </img></p>
 <p> Your Latex Code: <span id="code"></span>
 
 <div id="error"></div>
