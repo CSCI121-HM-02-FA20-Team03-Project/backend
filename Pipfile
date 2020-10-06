@@ -10,7 +10,7 @@ pylint = "*"
 flask = "*"
 pillow = "*"
 gunicorn = "*"
-torch = "*"
+torch = "==1.6.0+cpu"
 numpy = "*"
 
 [requires]
