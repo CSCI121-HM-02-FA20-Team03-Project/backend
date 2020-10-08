@@ -8,11 +8,10 @@ function uploadImage() {
     // Add the file to the image
     const files = document.querySelector('[type=file]').files;
     const formData = new FormData();
-    
+
     var image = document.getElementById('image');
-    //next line might be wrong
-	// image.src = URL.createObjectURL(files[0]);
-    
+	  image.src = URL.createObjectURL(files[0]);
+
     for (let i=0; i < files.length; i++) {
         let file = files[i];
         formData.append('image', file);
@@ -23,7 +22,7 @@ function uploadImage() {
             method: 'POST',
             body: formData,
         }
-    ).then((response) => { 
+    ).then((response) => {
         if (response.status == 200) {
             document.getElementById('error').innerHTML = "";
             return response.text().then((response_text) => {
@@ -51,10 +50,11 @@ function uploadImage() {
   <input type="file" id="img" name="image" accept="image/*">
   <input type="submit">
 </form>
-<p> Your Image: <img id="image" width="200" </img></p>
-<p> Your Latex Code: <span id="code"></span>
-
+<p> Your Image: </p>
+<img id="image" width="400"> </img>
+<p> Your Latex Code: <span contentEditable="true" id="code" style="border:1px; border-style:solid; border-color:#000000; padding: 3px;">hi</span></p>
 <div id="error"></div>
+<p> Click LaTeX Code to make changes! </p>
 </center>
 </body>
 </html>
