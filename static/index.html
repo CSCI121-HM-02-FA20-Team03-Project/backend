@@ -1,117 +1,131 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-    <style>
-        body{
-  background: rgba(0,0,0,0.9);
-  font-family: "Courier New";
-  color: #ffffff;
-}
-form{
-  text-align: center;
-  width: 50%;
-  width: 500px;
-  height: 200px;
-  border: 4px dashed #fff;
-}
-form p{
-  width: 100%;
-  height: 100%;
-  text-align: center;
-  line-height: 170px;
-  
-}
-form input{
-  position: fixed;
-  margin: 0;
-  padding: 0;
-  width: 500px;
-  height: 200px;
-  outline: none;
-  opacity: 0;
-}
-form button{
-  margin: 0;
-  color: #fff;
-  background: #16a085;
-  border: none;
-  width: 508px;
-  height: 35px;
-  margin-top: -20px;
-  margin-left: -4px;
-  border-radius: 4px;
-  border-bottom: 4px solid #117A60;
-  transition: all .2s ease;
-  outline: none;
-}
-form button:hover{
-  background: #149174;
-    color: #0C5645;
-}
-form button:active{
-  border:0;
-}
-</style>
-<script>
-const form = document.getElementById("image-upload-form");
-const url = "/api/ephemeral";
+  <style>
+    body {
+      background: rgba(0, 0, 0, 0.9);
+      font-family: "Courier New";
+      color: #ffffff;
+    }
 
-function change(){
-    document.getElementById("drag").innerHTML = "1 Image Selected";
-}
+    form {
+      text-align: center;
+      width: 50%;
+      width: 500px;
+      height: 200px;
+      border: 4px dashed #fff;
+    }
 
-function uploadImage() {
-    // Add the file to the image
-    const files = document.querySelector('[type=file]').files;
-    const formData = new FormData();
+    form:hover {
+      background: #313639;
+    }
 
-    var image = document.getElementById('image');
-	  image.src = URL.createObjectURL(files[0]);
+    form p {
+      width: 100%;
+      height: 100%;
+      text-align: center;
+      line-height: 170px;
 
-    for (let i=0; i < files.length; i++) {
+    }
+
+    form input {
+      position: fixed;
+      margin: 0;
+      padding: 0;
+      width: 500px;
+      height: 200px;
+      outline: none;
+      opacity: 0;
+    }
+
+    form button {
+      margin: 0;
+      color: #fff;
+      background: #16a085;
+      border: none;
+      width: 508px;
+      height: 35px;
+      margin-top: -20px;
+      margin-left: -4px;
+      border-radius: 4px;
+      border-bottom: 4px solid #117A60;
+      transition: all .2s ease;
+      outline: none;
+    }
+
+    form button:hover {
+      background: #149174;
+      color: #0C5645;
+    }
+
+    form button:active {
+      border: 0;
+    }
+  </style>
+  <script>
+    const form = document.getElementById("image-upload-form");
+    const url = "/api/ephemeral";
+
+    function change() {
+      document.getElementById("drag").innerHTML = "1 Image Selected";
+    }
+
+    function uploadImage() {
+      // Add the file to the image
+      const files = document.querySelector('[type=file]').files;
+      const formData = new FormData();
+
+      var image = document.getElementById('image');
+      image.src = URL.createObjectURL(files[0]);
+
+      for (let i = 0; i < files.length; i++) {
         let file = files[i];
         formData.append('image', file);
-    }
-    fetch(
+      }
+      fetch(
         url,
         {
-            method: 'POST',
-            body: formData,
+          method: 'POST',
+          body: formData,
         }
-    ).then((response) => {
+      ).then((response) => {
         if (response.status == 200) {
-            document.getElementById('error').innerHTML = "";
-            return response.text().then((response_text) => {
-                document.getElementById('code').innerHTML = response_text;
-            });
+          document.getElementById('error').innerHTML = "";
+          return response.text().then((response_text) => {
+            document.getElementById('code').innerHTML = response_text;
+          });
         } else {
-            document.getElementById('code').innerHTML = "";
-            return response.text().then((response_text) => {
-                console.log(response_text);
-                document.getElementById('error').innerHTML = "Error: " + response_text;
-            });
+          document.getElementById('code').innerHTML = "";
+          return response.text().then((response_text) => {
+            console.log(response_text);
+            document.getElementById('error').innerHTML = "Error: " + response_text;
+          });
         }
-    })
-    ;
-    return false;
-  }
-</script>
+      })
+        ;
+      return false;
+    }
+  </script>
 </head>
 <center>
-<h1>Math to Latex!</h1>
+  <h1>Math to Latex!</h1>
 
-<form id="image-upload-form" name="myForm" onsubmit="return uploadImage()" method="POST" onchange="change()">
-  <input type="file" id="img" name="image" accept="image/*">
-  <p id="drag">Drag your files here or click in this area.</p>
-  <button type="submit">Upload</button>
-</form>
-<div style="margin-top:100px;">
-<p> Uploaded Image: </p>
-<img id="image" width="200"> </img>
-<p>Latex Code Output: <span contentEditable="true" id="code" style="border:1px; border-style:solid; border-color:#ffffff; padding-right: 5px; padding-top: 2.5px; padding-bottom: 2.5px; padding-left: 5px;"></span></p>
-<div id="error"></div>
+  <form id="image-upload-form" name="myForm" onsubmit="return uploadImage()" method="POST" onchange="change()">
+    <input type="file" id="img" name="image" accept="image/*">
+    <p id="drag">Drag your files here or click in this area.</p>
+    <button type="submit">Upload</button>
+  </form>
+  <div style="margin-top:100px;">
+    <p> Uploaded Image: </p>
+    <img id="image" width="200"> </img>
+    <p>Latex Code Output: <span contentEditable="true" id="code"
+        style="border:1px; border-style:solid; border-color:#ffffff; padding-right: 5px; padding-top: 2.5px; padding-bottom: 2.5px; padding-left: 5px;"></span>
+    </p>
+    <div id="error"></div>
 
-</div>
+  </div>
 </center>
 </body>
+
 </html>
