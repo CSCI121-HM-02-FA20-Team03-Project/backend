@@ -94,7 +94,7 @@
           document.getElementById('error').innerHTML = "";
           return response.text().then((response_text) => {
             document.getElementById('code').innerHTML = response_text;
-            document.getElementById('compile').src = "https://latex.codecogs.com/png.latex?" + response_text;
+            document.getElementById('compile').src = "https://latex.codecogs.com/png.latex?\\" + response_text;
           });
         } else {
           document.getElementById('code').innerHTML = "";
@@ -126,7 +126,7 @@
     <div id="error"></div>
 
     <div style="background-color: #ffffff; width:500px; height: 200px;"> 
-      <img id="image" height="175" id="compile"> </img>
+      <img id="compile" height="175"> </img>
     </div>
 
   </div>
