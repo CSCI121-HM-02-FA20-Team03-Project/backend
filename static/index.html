@@ -71,6 +71,13 @@
       document.getElementById("drag").innerHTML = "1 Image Selected";
     }
 
+    function compile(){
+      var latex = getElementById('code').innerHTML;
+      document.getElementById('compile').src = String.raw`https://latex.codecogs.com/png.latex?\dpi{400}${latex}`;
+      document.getElementById("compileDiv").style.visibility = "visible";
+
+    }
+
     function uploadImage() {
       // Add the file to the image
       const files = document.querySelector('[type=file]').files;
@@ -94,7 +101,6 @@
           document.getElementById('error').innerHTML = "";
           return response.text().then((response_text) => {
             document.getElementById('code').innerHTML = response_text;
-            document.getElementById('compile').src = String.raw`https://latex.codecogs.com/png.latex?\dpi{400}${response_text}`;
           });
         } else {
           document.getElementById('code').innerHTML = "";
@@ -123,10 +129,11 @@
     <p>Latex Code Output: <span contentEditable="true" id="code"
         style="border:1px; border-style:solid; border-color:#ffffff; padding-right: 5px; padding-top: 2.5px; padding-bottom: 2.5px; padding-left: 5px;"></span>
     </p>
+    <button style="display: inline;" type="button" onclick="compile()">Compile LaTeX</button>
     <div id="error"></div>
 
-    <div style="background-color: #ffffff; width:500px; height: 200px;"> 
-      <img id="compile" height="175"> </img>
+    <div id="compileDiv" style="background-color: #ffffff; width:500px; height: 200px; visibility: hidden;"> 
+      <img style="margin-top: 10px;" id="compile" height="175"> </img>
     </div>
 
   </div>
