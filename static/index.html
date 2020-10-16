@@ -72,7 +72,7 @@
     }
 
     function compile(){
-      var latex = getElementById('code').innerHTML;
+      var latex = document.getElementById('code').innerHTML;
       document.getElementById('compile').src = String.raw`https://latex.codecogs.com/png.latex?\dpi{400}${latex}`;
       document.getElementById("compileDiv").style.visibility = "visible";
 
