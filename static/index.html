@@ -72,7 +72,7 @@
       document.getElementById("drag").innerHTML = "1 Image Selected";
     }
 
-    async function compile(){
+    async function compile() {
       var latex = document.getElementById('code').innerHTML;
       document.getElementById('compile').src = String.raw`https://latex.codecogs.com/png.latex?\dpi{400}${latex}`;
       await new Promise(r => setTimeout(r, 1000));
@@ -84,10 +84,10 @@
 
     }
 
-    function wolfram(){
+    function wolfram() {
       var latex = document.getElementById('code').innerHTML;
       document.getElementById("wolframDiv").style.visibility = "visible";
-      document.getElementById('wolfram').src=String.raw`http://api.wolframalpha.com/v1/simple?appid=TUXUG5-KEW895XAX3&i=${latex}`;
+      document.getElementById('wolfram').src = String.raw`http://api.wolframalpha.com/v1/simple?appid=TUXUG5-KEW895XAX3&i=${latex}`;
     }
 
     function uploadImage() {
@@ -140,20 +140,21 @@
     <p> Uploaded Image: </p>
     <img style="display: block;" id="image" width="200"> </img>
     <div style="margin-top: 10px; margin-bottom: 10px;">
-    <p style="display: inline;">Latex Code Output: <span contentEditable="true" id="code"
-        style="border:1px; border-style:solid; border-color:#ffffff; padding-right: 5px; padding-top: 2.5px; padding-bottom: 2.5px; padding-left: 5px;"></span>
-    </p>
-    <button style="display: inline; margin-left:10px;" type="button" onclick="compile()">Compile LaTeX</button>
-    <button style="display: inline; margin-left:1px;" type="button" onclick="wolfram()">Send To Wolfram Alpha</button>
-    <div id="error"></div>
+      <p style="display: inline;">Latex Code Output: <span contentEditable="true" id="code"
+          style="display: inline-block; border:1px; border-style:solid; border-color:#ffffff; padding-right: 5px; padding-top: 2.5px; padding-bottom: 2.5px; padding-left: 5px;"></span>
+      </p>
+      <button style="display: inline; margin-left:10px;" type="button" onclick="compile()">Compile LaTeX</button>
+      <button style="display: inline; margin-left:1px;" type="button" onclick="wolfram()">Send To Wolfram Alpha</button>
+      <div id="error"></div>
 
-    <div id="compileDiv" style="background-color: #ffffff; width:500px; height: 200px; visibility: hidden; margin-top:10px"> 
-      <img style="margin-top: 10px;" id="compile"> </img>
+      <div id="compileDiv"
+        style="background-color: #ffffff; width:500px; height: 200px; visibility: hidden; margin-top:10px">
+        <img style="margin-top: 10px;" id="compile"> </img>
+      </div>
+      <div id="wolframDiv" style="visibility: hidden; margin-top:10px">
+        <img style="margin-top: 10px;" id="wolfram"> </img>
+      </div>
     </div>
-    <div id="wolframDiv" style="visibility: hidden; margin-top:10px"> 
-      <img style="margin-top: 10px;" id="wolfram"> </img>
-    </div>
-  </div>
 
   </div>
 </center>
