@@ -72,7 +72,7 @@
       document.getElementById("drag").innerHTML = "1 Image Selected";
     }
 
-    function compile(){
+    async function compile(){
       var latex = document.getElementById('code').innerHTML;
       document.getElementById('compile').src = String.raw`https://latex.codecogs.com/png.latex?\dpi{400}${latex}`;
       await sleep(1000);
