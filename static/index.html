@@ -125,8 +125,9 @@
   </form>
   <div style="margin-top:100px;">
     <p> Uploaded Image: </p>
-    <img id="image" width="200"> </img>
-    <p>Latex Code Output: <span contentEditable="true" id="code"
+    <img style="display: block;" id="image" width="200"> </img>
+    <div style="margin-top: 10px; margin-bottom: 10px;">
+    <p style="display: inline;">Latex Code Output: <span contentEditable="true" id="code"
         style="border:1px; border-style:solid; border-color:#ffffff; padding-right: 5px; padding-top: 2.5px; padding-bottom: 2.5px; padding-left: 5px;"></span>
     </p>
     <button style="display: inline;" type="button" onclick="compile()">Compile LaTeX</button>
@@ -135,6 +136,7 @@
     <div id="compileDiv" style="background-color: #ffffff; width:500px; height: 200px; visibility: hidden;"> 
       <img style="margin-top: 10px;" id="compile" height="175"> </img>
     </div>
+  </div>
 
   </div>
 </center>
