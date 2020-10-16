@@ -94,7 +94,7 @@
           document.getElementById('error').innerHTML = "";
           return response.text().then((response_text) => {
             document.getElementById('code').innerHTML = response_text;
-            document.getElementById('compile').src = "https://latex.codecogs.com/png.latex?\\" + response_text;
+            document.getElementById('compile').src = String.raw`https://latex.codecogs.com/png.latex?\\dpi{400}${response_text}`;
           });
         } else {
           document.getElementById('code').innerHTML = "";
