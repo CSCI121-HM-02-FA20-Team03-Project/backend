@@ -35,7 +35,7 @@ def get_model_output(image):
     """Call the model and get the result"""
     # in_data = torch.from_numpy(np.array(image.convert("L"))).type(torch.FloatTensor)
     
-    originalImage = cv2.imread(image, cv2.IMREAD_UNCHANGED)
+    originalImage = cv2.imread(path, cv2.IMREAD_UNCHANGED)
 
     resizedImage = Preprocess.resizeImage(originalImage)
     convertedImage = Preprocess.invertImageColor(resizedImage)[1]
