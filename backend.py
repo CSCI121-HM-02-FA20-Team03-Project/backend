@@ -21,8 +21,7 @@ def ephemeral():
     if request.method == 'POST':
         try:
             f = request.files['image']
-            #image = Image.open(f)
-            image = cv2.imread(f, cv2.IMREAD_UNCHANGED)
+            image = Image.open(f)
         except IOError:
             return "not a valid image", 400
         except KeyError:
@@ -36,11 +35,12 @@ def get_model_output(image):
     """Call the model and get the result"""
     # in_data = torch.from_numpy(np.array(image.convert("L"))).type(torch.FloatTensor)
     
+    originalImage = cv2.imread(image, cv2.IMREAD_UNCHANGED)
 
-    resized_image = Preprocess.resizeImage(image)
-    converted_image = Preprocess.invertImageColor(resized_image)[1]
+    resizedImage = Preprocess.resizeImage(originalImage)
+    convertedImage = Preprocess.invertImageColor(resizedImage)[1]
 
-    in_data = torch.from_numpy(converted_image).type(torch.FloatTensor)
+    in_data = torch.from_numpy(convertedImage).type(torch.FloatTensor)
     prediction = learned_model.infer(in_data)
     print('Prediction: %s' % prediction)
     return prediction
