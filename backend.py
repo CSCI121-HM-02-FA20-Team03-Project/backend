@@ -2,7 +2,6 @@ from flask import Flask, request, redirect
 from PIL import Image
 import numpy as np
 import torch
-import cv2
 
 from model.infer_model import InferModel
 from model.preprocess import Preprocess
