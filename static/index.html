@@ -87,7 +87,7 @@
     function wolfram() {
       var latex = document.getElementById('code').innerHTML;
       document.getElementById("wolframDiv").style.visibility = "visible";
-      document.getElementById('wolfram').src = String.raw`http://api.wolframalpha.com/v1/simple?appid=TUXUG5-KEW895XAX3&i=${latex}`;
+      document.getElementById('wolfram').src = String.raw`http://api.wolframalpha.com/v1/simple?appid=TUXUG5-KEW895XAX3&&background=193555&foreground=white&i=${latex}`;
     }
 
     function uploadImage() {
