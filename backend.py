@@ -4,6 +4,7 @@ import numpy as np
 import torch
 
 from model.infer_model import InferModel
+from model.preprocess import Preprocess
 
 app = Flask(__name__)
 
@@ -32,7 +33,14 @@ def ephemeral():
 learned_model = InferModel()
 def get_model_output(image):
     """Call the model and get the result"""
-    in_data = torch.from_numpy(np.array(image.convert("L"))).type(torch.FloatTensor)
+    # in_data = torch.from_numpy(np.array(image.convert("L"))).type(torch.FloatTensor)
+    
+    originalImage = cv2.imread(path, cv2.IMREAD_UNCHANGED)
+
+    resizedImage = Preprocess.resizeImage(originalImage)
+    convertedImage = Preprocess.invertImageColor(resizedImage)[1]
+
+    in_data = torch.from_numpy(convertedImage).type(torch.FloatTensor)
     prediction = learned_model.infer(in_data)
     print('Prediction: %s' % prediction)
     return prediction
