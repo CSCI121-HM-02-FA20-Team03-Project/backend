@@ -96,6 +96,10 @@
       // Add the file to the image
       const files = document.querySelector('[type=file]').files;
       const formData = new FormData();
+      if (files.length == 0){
+        document.getElementById('code').innerHTML = 'No Image Uploaded, please try again!';
+        return false;
+      }
 
       var image = document.getElementById('image');
       image.src = URL.createObjectURL(files[0]);
