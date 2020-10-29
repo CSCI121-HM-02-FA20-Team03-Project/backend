@@ -87,7 +87,8 @@
     function wolfram() {
       var latex = document.getElementById('code').innerHTML;
       document.getElementById("wolframDiv").style.visibility = "visible";
-      document.getElementById('wolfram').src = String.raw`http://api.wolframalpha.com/v1/simple?appid=TUXUG5-KEW895XAX3&background=193555&foreground=white&i=${latex}`;
+      var encodedURL = encodeURIComponent(`${latex}`);
+      document.getElementById('wolfram').src = String.raw`http://api.wolframalpha.com/v1/simple?appid=TUXUG5-KEW895XAX3&&background=193555&foreground=white&i=${encodedURL}`;
     }
 
     function uploadImage() {
@@ -95,6 +96,10 @@
       // Add the file to the image
       const files = document.querySelector('[type=file]').files;
       const formData = new FormData();
+      if (files.length == 0) {
+        document.getElementById('code').innerHTML = 'No Image Uploaded, please try again!';
+        return false;
+      }
 
       var image = document.getElementById('image');
       image.src = URL.createObjectURL(files[0]);
@@ -129,35 +134,39 @@
   </script>
 </head>
 <center>
-  <h1>Math to Latex!</h1>
+  <h1 style="margin-bottom: 2.5%;">Math to Latex!</h1>
+</center>
+<div id="left" style="display: inline-block; float: left; margin-left: 5%;>">
 
   <form id="image-upload-form" name="myForm" onsubmit="return uploadImage()" method="POST" onchange="change()">
     <input type="file" id="img" name="image" accept="image/*">
     <p id="drag">Drag your files here or click in this area.</p>
     <button type="submit">Upload</button>
   </form>
-  <div style="margin-top:100px;">
-    <p> Uploaded Image: </p>
-    <img style="display: block;" id="image" width="200"> </img>
-    <div style="margin-top: 10px; margin-bottom: 10px;">
-      <p style="display: inline;">Latex Code Output: <span contentEditable="true" id="code"
-          style="display: inline-block; border:1px; border-style:solid; border-color:#ffffff; padding-right: 5px; padding-top: 2.5px; padding-bottom: 2.5px; padding-left: 5px;"></span>
-      </p>
-      <button style="display: inline; margin-left:10px;" type="button" onclick="compile()">Compile LaTeX</button>
-      <button style="display: inline; margin-left:1px;" type="button" onclick="wolfram()">Send To Wolfram Alpha</button>
-      <div id="error"></div>
 
-      <div id="compileDiv"
-        style="background-color: #ffffff; width:500px; height: 200px; visibility: hidden; margin-top:10px">
-        <img style="margin-top: 10px;" id="compile"> </img>
-      </div>
-      <div id="wolframDiv" style="visibility: hidden; margin-top:10px">
-        <img style="margin-top: 10px;" id="wolfram"> </img>
-      </div>
-    </div>
+  <p style="padding-top: 50px;"> Uploaded Image: </p>
+  <img style="display: block;" id="image" width="200"> </img>
 
+</div>
+
+<div id="right" style="display: inline-block; float: right; margin-top: 10px; margin-bottom: 10px; padding-right: 5%;">
+  <p style="display: inline;">Latex Code Output: <span contentEditable="true" id="code"
+      style="display: inline-block; border:1px; border-style:solid; border-color:#ffffff; padding-right: 5px; padding-top: 2.5px; padding-bottom: 2.5px; padding-left: 5px;"></span>
+  </p>
+  <button style="display: inline; margin-left:10px;" type="button" onclick="compile()">Compile LaTeX</button>
+  <button style="display: inline; margin-left:1px;" type="button" onclick="wolfram()">Send To Wolfram Alpha</button>
+  <div id="error"></div>
+
+  <div id="compileDiv"
+    style="background-color: #ffffff; width:500px; height: 200px; visibility: hidden; margin-top:10px">
+    <img style="margin-top: 10px;" id="compile"> </img>
   </div>
-</center>
+  <div id="wolframDiv" style="visibility: hidden; margin-top:10px">
+    <img style="margin-top: 10px;" id="wolfram"> </img>
+  </div>
+
+</div>
+
 </body>
 
 </html>
