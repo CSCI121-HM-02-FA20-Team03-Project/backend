@@ -1,7 +1,7 @@
 from matplotlib import pyplot as plt
 from PIL import Image, ImageOps
 import numpy as np
-import matplotlib
+# import matplotlib
 
 def calculateThreshold(original_image):
     array_of_pixel_color = np.array(original_image.getdata())
