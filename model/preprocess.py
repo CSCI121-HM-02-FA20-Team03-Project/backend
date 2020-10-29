@@ -51,7 +51,7 @@ def convertToBMP(image):
 
 
 def resizeImage(image):
-    scale_percent = round(image.size[1]/100) 
+    scale_percent = image.size[1]/150
 
     resized_image = image.resize((round(image.size[0]*(1/scale_percent)), round(image.size[1]*(1/scale_percent))))
     return resized_image
