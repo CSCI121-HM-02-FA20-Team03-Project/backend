@@ -1,27 +1,69 @@
-import cv2 
-class Preprocess:
-    def invertImageColor(originalImage):
-        grayImage = cv2.cvtColor(originalImage, cv2.COLOR_BGR2GRAY)    
-        blackAndWhiteImage = cv2.threshold(grayImage, 127, 255, cv2.THRESH_BINARY_INV)
+from matplotlib import pyplot as plt
+from PIL import Image, ImageOps
+import numpy as np
+import matplotlib
 
-        return blackAndWhiteImage
+def calculateThreshold(original_image):
+    array_of_pixel_color = np.array(original_image.getdata())
+    sorted_array = np.sort(array_of_pixel_color)
 
-    def resizeImage(image):
-        scale_percent = image.shape[0]/100 # percent of original size
+    total = 0
+    for i in range(0, 16):
+        total += np.percentile(sorted_array, i)
+    average = total//15    
 
-        width = int(image.shape[1] * (1/scale_percent))
-        height = int(image.shape[0] * (1/scale_percent))
-        
-        # dsize
-        dsize = (width, height)
+    total_one = 0
+    for i in range(76, 101):
+        total_one += np.percentile(sorted_array, i)
+    average_one = total_one//25
 
-        # resize image
-        output = cv2.resize(image, dsize)
+    total_two = 0
+    for i in range(1, 26):
+        total_two += np.percentile(sorted_array, i)
+    average_two = total_two//25
 
-        return output
+    return average
+
+
+def invertImageColor(original_image):
+    image = original_image.convert("L")
+    thresh = calculateThreshold(image)
+
+    # got code from https://stackoverflow.com/questions/9506841/using-python-pil-to-turn-a-rgb-image-into-a-pure-black-and-white-image
+
+    fn_one = lambda x : 255 if x > thresh else 0
+    image_one = original_image.convert('L').point(fn_one, mode='L')
+    rgb_image_one = image_one.convert('RGB')
+
+    fn_two = lambda x : 255 if x < thresh else 0
+    image_two = original_image.convert('L').point(fn_two, mode='L')
+    rgb_image_two = image_two.convert('RGB')
+    
+    if rgb_image_one.getpixel((image_one.size[0]-1, image_one.size[1]-1)) == (0, 0, 0) and rgb_image_one.getpixel((image_one.size[0]-1, 0)) == (0, 0, 0) and rgb_image_one.getpixel((0, image_one.size[1]-1)) == (0, 0, 0) and rgb_image_one.getpixel((0, 0)) == (0, 0, 0):
+        return image_one
+    elif rgb_image_two.getpixel((image_two.size[0]-1, image_two.size[1]-1)) == (0, 0, 0) and rgb_image_two.getpixel((image_two.size[0]-1, 0)) == (0, 0, 0) and rgb_image_two.getpixel((0, image_two.size[1]-1)) == (0, 0, 0) or rgb_image_two.getpixel((0, 0)) == (0, 0, 0):
+        return image_two
+
+    return original_image
+
+def convertToBMP(image):
+    image.save("image.bmp")
+
+
+def resizeImage(image):
+    scale_percent = round(image.size[1]/100) 
+
+    resized_image = image.resize((round(image.size[0]*(1/scale_percent)), round(image.size[1]*(1/scale_percent))))
+    return resized_image
+
 
 # if __name__ == '__main__':
-#     originalImage = cv2.imread('image_here.png', cv2.IMREAD_UNCHANGED)
-   
-#     resizedImage = resizeImage(originalImage)
-#     convertedImage = invertImageColor(resizedImage)
+#     image = Image.open("18_em_6_0.bmp")
+#     # calculateThreshold(image)
+#     # colorized_image = ImageOps.colorize(image, black ="black", white ="white")
+#     # colorized_image.show()
+#     converted_image = invertImageColor(image)
+#     converted_image.show()
+#     resized_image = resizeImage(converted_image)
+#     # resized_image.show()
+#     # convertToBMP(resized_image)
