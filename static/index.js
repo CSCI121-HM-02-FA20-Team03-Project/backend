@@ -92,7 +92,7 @@ function save_permalink() {
         if (response.status == 200) {
             document.getElementById('error').innerHTML = "";
             return response.text().then((response_text) => {
-                document.getElementById('permalink').innerHTML = "Permalink to this result: https://mathtolatex.heroku.com/static/index.html?image=" + response_text;
+                document.getElementById('permalink').innerHTML = "Permalink to this result: https://image-to-latex-backend.herokuapp.com/static/index.html?image=" + response_text;
             });
         } else {
             document.getElementById('permalink').innerHTML = "";
@@ -118,6 +118,7 @@ function fetch_key() {
                 var body = JSON.parse(response_text);
                 document.getElementById('code').innerHTML = body.latex;
                 document.getElementById('image').src = 'data:image;base64,' + body.image;
+                document.getElementById('permalink').innerHTML = "Permalink to this result: https://image-to-latex-backend.herokuapp.com/static/index.html?image=" + params.get("image");
             });
         } else {
             return response.text().then((response_text) => {

@@ -1,4 +1,5 @@
 import base64
+import json
 import os
 
 from flask import Flask, request, redirect
@@ -61,8 +62,7 @@ def download():
         if res is None:
             return 'No such image', 404
         image, latex = res
-        # print('Image: {}\nType: {}'.format(image, type(image)), file=sys.stderr)
-        return '{ "image" : "%s", "latex" : "%s" }' % (base64.b64encode(image).decode(), latex)
+        return json.dumps({ "image" : base64.b64encode(image).decode(), "latex": latex })
 
 learned_model = InferModel()
 def get_model_output(image):
