@@ -1,172 +1,47 @@
 <!DOCTYPE html>
 <html>
-
 <head>
-  <style>
-    body {
-      background: rgba(0, 0, 0, 0.9);
-      font-family: "Courier New";
-      color: #ffffff;
-    }
-
-    form {
-      text-align: center;
-      width: 50%;
-      width: 450px;
-      height: 50px;
-      border: 4px dashed #fff;
-    }
-
-    form:hover {
-      background: #313639;
-    }
-
-    form p {
-      width: 100%;
-      height: 100%;
-      text-align: center;
-
-    }
-
-    form input {
-      position: fixed;
-      margin: 0;
-      padding: 0;
-      width: 450px;
-      height: 50px;
-      margin-left: -225px;
-      outline: none;
-      opacity: 0;
-    }
-
-    form button {
-      margin: 0;
-      color: #fff;
-      background: #16a085;
-      border: none;
-      width: 450px;
-      height: 35px;
-      margin-top: -20px;
-      margin-left: -4px;
-      border-radius: 4px;
-      border-bottom: 4px solid #117A60;
-      transition: all .2s ease;
-      outline: none;
-    }
-
-    form button:hover {
-      background: #149174;
-      color: #0C5645;
-    }
-
-    form button:active {
-      border: 0;
-    }
-  </style>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-  <script>
-    const form = document.getElementById("image-upload-form");
-    const url = "/api/ephemeral";
-
-    function change() {
-      document.getElementById("drag").innerHTML = "1 Image Selected";
-    }
-
-    async function compile() {
-      var latex = document.getElementById('code').innerHTML;
-      document.getElementById('compile').src = String.raw`https://latex.codecogs.com/png.latex?\dpi{400}${latex}`;
-      await new Promise(r => setTimeout(r, 1000));
-      var width = document.getElementById('compile').clientWidth;
-      var height = document.getElementById('compile').clientHeight;
-      document.getElementById("compileDiv").style.width = `${width + 30}px`;
-      document.getElementById("compileDiv").style.height = `${height + 30}px`;
-      document.getElementById("compileDiv").style.visibility = "visible";
-
-    }
-
-    function wolfram() {
-      var latex = document.getElementById('code').innerHTML;
-      document.getElementById("wolframDiv").style.visibility = "visible";
-      var encodedURL = encodeURIComponent(`${latex}`);
-      document.getElementById('wolfram').src = String.raw`https://api.wolframalpha.com/v1/simple?appid=TUXUG5-KEW895XAX3&&background=193555&foreground=white&i=${encodedURL}`;
-    }
-
-    function uploadImage() {
-      document.getElementById('code').innerHTML = 'Loading...';
-      // Add the file to the image
-      const files = document.querySelector('[type=file]').files;
-      const formData = new FormData();
-      if (files.length == 0) {
-        document.getElementById('code').innerHTML = 'No Image Uploaded, please try again!';
-        return false;
-      }
-
-      var image = document.getElementById('image');
-      image.src = URL.createObjectURL(files[0]);
-
-      for (let i = 0; i < files.length; i++) {
-        let file = files[i];
-        formData.append('image', file);
-      }
-      fetch(
-        url,
-        {
-          method: 'POST',
-          body: formData,
-        }
-      ).then((response) => {
-        if (response.status == 200) {
-          document.getElementById('error').innerHTML = "";
-          return response.text().then((response_text) => {
-            document.getElementById('code').innerHTML = response_text;
-          });
-        } else {
-          document.getElementById('code').innerHTML = "";
-          return response.text().then((response_text) => {
-            console.log(response_text);
-            document.getElementById('error').innerHTML = "Error: " + response_text;
-          });
-        }
-      })
-        ;
-      return false;
-    }
-  </script>
+    <link rel="stylesheet" href="index.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="index.js"></script>
 </head>
+
+<body>
 <center>
-  <h1 style="margin-bottom: 2.5%;">Math to Latex!</h1>
+    <h1 style="margin-bottom: 2.5%;">Math to Latex!</h1>
 </center>
 <div id="left" style="display: inline-block; float: left; margin-left: 5%;>">
 
-  <form id="image-upload-form" name="myForm" onsubmit="return uploadImage()" method="POST" onchange="change()">
-    <input type="file" id="img" name="image" accept="image/*">
-    <p id="drag">Drag your files here or click in this area.</p>
-    <button type="submit">Upload</button>
-  </form>
+    <form id="image-upload-form" name="myForm" onsubmit="return uploadImage()" method="POST" onchange="change()">
+        <input type="file" id="img" name="image" accept="image/*">
+        <p id="drag">Drag your files here or click in this area.</p>
+        <button type="submit">Upload</button>
+    </form>
 
-  <p style="padding-top: 50px;"> Uploaded Image: </p>
-  <img style="display: block;" id="image" width="200"> </img>
+    <p style="padding-top: 50px;"> Uploaded Image: </p>
+    <img style="display: block;" id="image" width="200"> </img>
 
 </div>
 
 <div id="right" style="display: inline-block; float: right; margin-top: 10px; margin-bottom: 10px; padding-right: 5%;">
-  <p style="display: inline;">Latex Code Output: <span contentEditable="true" id="code"
-      style="display: inline-block; border:1px; border-style:solid; border-color:#ffffff; padding-right: 5px; padding-top: 2.5px; padding-bottom: 2.5px; padding-left: 5px;"></span>
-  </p>
-  <button style="display: inline; margin-left:10px;" type="button" onclick="compile()">Compile LaTeX</button>
-  <button style="display: inline; margin-left:1px;" type="button" onclick="wolfram()">Send To Wolfram Alpha</button>
-  <div id="error"></div>
+    <p style="display: inline;">Latex Code Output: <span contentEditable="true" id="code"
+                                                                                style="display: inline-block; border:1px; border-style:solid; border-color:#ffffff; padding-right: 5px; padding-top: 2.5px; padding-bottom: 2.5px; padding-left: 5px;"></span>
+    </p>
+    <button style="display: inline; margin-left:10px;" type="button" onclick="compile()">Compile LaTeX</button>
+    <button style="display: inline; margin-left:1px;" type="button" onclick="wolfram()">Send To Wolfram Alpha</button>
+    <button style="display: inline; margin-left:1px;" type="button" onclick="save_permalink()">Save Result</button>
+    <div id="error"></div>
 
-  <div id="compileDiv"
-    style="background-color: #ffffff; width:500px; height: 200px; visibility: hidden; margin-top:10px; margin-left: auto; margin-right: auto;">
-    <img style="margin-top: 10px; text-align: center; margin-left: auto; margin-right: auto; display: block; padding-top: 10px;" id="compile"> </img>
-  </div>
-  <div id="wolframDiv" style="visibility: hidden; margin-top:10px; text-align: center;"> 
-    <img style="margin-top: 10px;" id="wolfram"> </img>
-  </div>
+    <p><div id="permalink"></div></p>
 
+    <div id="compileDiv"
+         style="background-color: #ffffff; width:500px; height: 200px; visibility: hidden; margin-top:10px; margin-left: auto; margin-right: auto;">
+        <img style="margin-top: 10px; text-align: center; margin-left: auto; margin-right: auto; display: block; padding-top: 10px;" id="compile"> </img>
+    </div>
+    <div id="wolframDiv" style="visibility: hidden; margin-top:10px; text-align: center;"> 
+        <img style="margin-top: 10px;" id="wolfram"> </img>
+    </div>
 </div>
-
 </body>
 
 </html>
