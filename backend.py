@@ -1,8 +1,13 @@
+import base64
+import os
+
 from flask import Flask, request, redirect
 from PIL import Image
+from psycopg2 import connect
 import numpy as np
 import torch
 
+from database import encode_hex, fetch_from_database, insert_into_database
 from model.infer_model import InferModel
 from model.preprocess import *
 
@@ -29,6 +34,35 @@ def ephemeral():
         return get_model_output(image)
     else:
         return redirect('/')
+
+@app.route('/api/upload', methods=['POST'])
+def upload():
+    try:
+        f = request.files['image']
+    except KeyError:
+        return "no image was provided; the files were {}.".format(str(list(request.files.keys()))), 400
+    try:
+        latex = request.form['latex']
+    except KeyError:
+        return "no latex was provided; the form entries were {} and the files were {}.".format(str(list(request.form.keys())), str(list(request.files.keys()))), 400
+    conn = connect(os.environ['DATABASE_URL'], sslmode='require')
+    image = encode_hex(f)
+    key = insert_into_database(conn, image, latex)
+    return key
+
+@app.route('/api/download')
+def download():
+    conn = connect(os.environ['DATABASE_URL'], sslmode='require')
+    key = request.args.get('image')
+    if key is None:
+        return 'No key provided', 404
+    else:
+        res = fetch_from_database(conn, key)
+        if res is None:
+            return 'No such image', 404
+        image, latex = res
+        # print('Image: {}\nType: {}'.format(image, type(image)), file=sys.stderr)
+        return '{ "image" : "%s", "latex" : "%s" }' % (base64.b64encode(image).decode(), latex)
 
 learned_model = InferModel()
 def get_model_output(image):
