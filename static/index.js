@@ -116,8 +116,8 @@ function fetch_key() {
             document.getElementById('error').innerHTML = "";
             response.text().then((response_text) => {
                 var body = JSON.parse(response_text);
-                document.getElementById('response-latex').innerHTML = body.latex;
-                document.getElementById('response-image').src = 'data:image;base64,' + body.image;
+                document.getElementById('code').innerHTML = body.latex;
+                document.getElementById('image').src = 'data:image;base64,' + body.image;
             });
         } else {
             return response.text().then((response_text) => {
