@@ -26,7 +26,7 @@ function wolfram() {
 
 function uploadImage() {
     document.getElementById('code').innerHTML = 'Loading...';
-    document.getElementById("drag").innerHTML = "Drag your files here or click in this area.";
+    document.getElementById("drag").innerHTML = "Drag your files here or click in this area."; 
     // Add the file to the image
     const files = document.querySelector('[type=file]').files;
     const formData = new FormData();
