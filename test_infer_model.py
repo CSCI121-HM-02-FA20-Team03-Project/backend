@@ -6,8 +6,8 @@ from model.infer_model import InferModel
 from model.preprocess import *
 
 im = InferModel()
-path = 'model\\18_em_12_0.bmp'
-path = 'model\\download3.jpg'
+path = "model\\18_em_12_0.bmp"
+path = "model\\download3.jpg"
 
 # img_open = Image.open(path).convert('L')
 # print(np.array(img_open))

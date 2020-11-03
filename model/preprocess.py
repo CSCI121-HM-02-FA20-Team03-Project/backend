@@ -1,7 +1,9 @@
 # from matplotlib import pyplot as plt
 from PIL import Image, ImageOps
 import numpy as np
+
 # import matplotlib
+
 
 def calculateThreshold(original_image):
     array_of_pixel_color = np.array(original_image.getdata())
@@ -10,17 +12,17 @@ def calculateThreshold(original_image):
     total = 0
     for i in range(0, 16):
         total += np.percentile(sorted_array, i)
-    average = total//15    
+    average = total // 15
 
     total_one = 0
     for i in range(76, 101):
         total_one += np.percentile(sorted_array, i)
-    average_one = total_one//25
+    average_one = total_one // 25
 
     total_two = 0
     for i in range(1, 26):
         total_two += np.percentile(sorted_array, i)
-    average_two = total_two//25
+    average_two = total_two // 25
 
     return average
 
@@ -31,35 +33,47 @@ def invertImageColor(original_image):
 
     # got code from https://stackoverflow.com/questions/9506841/using-python-pil-to-turn-a-rgb-image-into-a-pure-black-and-white-image
 
-    fn_one = lambda x : 255 if x > thresh else 0
-    image_one = original_image.convert('L').point(fn_one, mode='L')
-    rgb_image_one = image_one.convert('RGB')
+    fn_one = lambda x: 255 if x > thresh else 0
+    image_one = original_image.convert("L").point(fn_one, mode="L")
+    rgb_image_one = image_one.convert("RGB")
 
-    fn_two = lambda x : 255 if x < thresh else 0
-    image_two = original_image.convert('L').point(fn_two, mode='L')
-    rgb_image_two = image_two.convert('RGB')
-    
-    if (rgb_image_one.getpixel((image_one.size[0]-1, image_one.size[1]-1)) == (0, 0, 0) 
-      and rgb_image_one.getpixel((image_one.size[0]-1, 0)) == (0, 0, 0) 
-      and rgb_image_one.getpixel((0, image_one.size[1]-1)) == (0, 0, 0) 
-      and rgb_image_one.getpixel((0, 0)) == (0, 0, 0)):
+    fn_two = lambda x: 255 if x < thresh else 0
+    image_two = original_image.convert("L").point(fn_two, mode="L")
+    rgb_image_two = image_two.convert("RGB")
+
+    if (
+        rgb_image_one.getpixel((image_one.size[0] - 1, image_one.size[1] - 1))
+        == (0, 0, 0)
+        and rgb_image_one.getpixel((image_one.size[0] - 1, 0)) == (0, 0, 0)
+        and rgb_image_one.getpixel((0, image_one.size[1] - 1)) == (0, 0, 0)
+        and rgb_image_one.getpixel((0, 0)) == (0, 0, 0)
+    ):
         return image_one
-    elif (rgb_image_two.getpixel((image_two.size[0]-1, image_two.size[1]-1)) == (0, 0, 0) 
-      and rgb_image_two.getpixel((image_two.size[0]-1, 0)) == (0, 0, 0) 
-      and rgb_image_two.getpixel((0, image_two.size[1]-1)) == (0, 0, 0) 
-      and rgb_image_two.getpixel((0, 0)) == (0, 0, 0)):
+    elif (
+        rgb_image_two.getpixel((image_two.size[0] - 1, image_two.size[1] - 1))
+        == (0, 0, 0)
+        and rgb_image_two.getpixel((image_two.size[0] - 1, 0)) == (0, 0, 0)
+        and rgb_image_two.getpixel((0, image_two.size[1] - 1)) == (0, 0, 0)
+        and rgb_image_two.getpixel((0, 0)) == (0, 0, 0)
+    ):
         return image_two
 
     return original_image
+
 
 def convertToBMP(image):
     image.save("image.bmp")
 
 
 def resizeImage(image):
-    scale_percent = image.size[1]/150
+    scale_percent = image.size[1] / 150
 
-    resized_image = image.resize((round(image.size[0]*(1/scale_percent)), round(image.size[1]*(1/scale_percent))))
+    resized_image = image.resize(
+        (
+            round(image.size[0] * (1 / scale_percent)),
+            round(image.size[1] * (1 / scale_percent)),
+        )
+    )
     return resized_image
 
 
