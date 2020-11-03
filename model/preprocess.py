@@ -39,9 +39,15 @@ def invertImageColor(original_image):
     image_two = original_image.convert('L').point(fn_two, mode='L')
     rgb_image_two = image_two.convert('RGB')
     
-    if rgb_image_one.getpixel((image_one.size[0]-1, image_one.size[1]-1)) == (0, 0, 0) and rgb_image_one.getpixel((image_one.size[0]-1, 0)) == (0, 0, 0) and rgb_image_one.getpixel((0, image_one.size[1]-1)) == (0, 0, 0) and rgb_image_one.getpixel((0, 0)) == (0, 0, 0):
+    if (rgb_image_one.getpixel((image_one.size[0]-1, image_one.size[1]-1)) == (0, 0, 0) 
+      and rgb_image_one.getpixel((image_one.size[0]-1, 0)) == (0, 0, 0) 
+      and rgb_image_one.getpixel((0, image_one.size[1]-1)) == (0, 0, 0) 
+      and rgb_image_one.getpixel((0, 0)) == (0, 0, 0)):
         return image_one
-    elif rgb_image_two.getpixel((image_two.size[0]-1, image_two.size[1]-1)) == (0, 0, 0) and rgb_image_two.getpixel((image_two.size[0]-1, 0)) == (0, 0, 0) and rgb_image_two.getpixel((0, image_two.size[1]-1)) == (0, 0, 0) or rgb_image_two.getpixel((0, 0)) == (0, 0, 0):
+    elif (rgb_image_two.getpixel((image_two.size[0]-1, image_two.size[1]-1)) == (0, 0, 0) 
+      and rgb_image_two.getpixel((image_two.size[0]-1, 0)) == (0, 0, 0) 
+      and rgb_image_two.getpixel((0, image_two.size[1]-1)) == (0, 0, 0) 
+      and rgb_image_two.getpixel((0, 0)) == (0, 0, 0)):
         return image_two
 
     return original_image
