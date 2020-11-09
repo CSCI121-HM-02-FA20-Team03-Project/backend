@@ -19,13 +19,19 @@ app = Flask(__name__)
 @app.route("/index")
 @app.route("/index.html")
 def index():
-    """Redirect to where they should go"""
+    """Redirect to our site's actual page"""
     return redirect("/static/index.html")
 
 
 @app.route("/api/ephemeral", methods=["GET", "POST"])
 def ephemeral():
-    """The basic endpoint which has no persistance"""
+    """The basic API endpoint. It takes the provided image, converts it into
+    LaTeX, and returns the result.
+
+    It will return a 400 error if the user didn't supply an image or if the
+    image is invalid. If the user sends a GET request to this URL, then we
+    redirect them to the 
+    """
     if request.method == "POST":
         try:
             f = request.files["image"]
@@ -33,12 +39,7 @@ def ephemeral():
         except IOError:
             return "not a valid image", 400
         except KeyError:
-            return (
-                "no image was provided; the files were {}.".format(
-                    str(list(request.files.keys()))
-                ),
-                400,
-            )
+            return "no image was provided", 400
         return get_model_output(image)
     else:
         return redirect("/")
@@ -46,24 +47,19 @@ def ephemeral():
 
 @app.route("/api/upload", methods=["POST"])
 def upload():
+    """The api endpoint for the user to save their image to the server.
+
+    It takes the image and the LaTeX (the user provides it to this call),
+    and then it returns the key for the newly uploaded image and LaTeX.
+    """
     try:
         f = request.files["image"]
     except KeyError:
-        return (
-            "no image was provided; the files were {}.".format(
-                str(list(request.files.keys()))
-            ),
-            400,
-        )
+        return "no image was provided", 400
     try:
         latex = request.form["latex"]
     except KeyError:
-        return (
-            "no latex was provided; the form entries were {} and the files were {}.".format(
-                str(list(request.form.keys())), str(list(request.files.keys()))
-            ),
-            400,
-        )
+        return "no latex was provided", 400
     conn = connect(os.environ["DATABASE_URL"], sslmode="require")
     image = encode_hex(f)
     key = insert_into_database(conn, image, latex)
@@ -72,6 +68,7 @@ def upload():
 
 @app.route("/api/download")
 def download():
+    """Fetch an already-uploaded image by its key"""
     conn = connect(os.environ["DATABASE_URL"], sslmode="require")
     key = request.args.get("image")
     if key is None:
@@ -86,15 +83,11 @@ def download():
 
 learned_model = InferModel()
 
-
 def get_model_output(image):
-    """Call the model and get the result"""
-    # in_data = torch.from_numpy(np.array(image.convert("L"))).type(torch.FloatTensor)
-
+    """Call the model and get the result, for the provided image"""
+    # Preprocess the image - change its size and coloring to match the training set
     converted_image = invertImageColor(image)
     resized_image = resizeImage(converted_image)
-
-    in_data = torch.from_numpy(np.array(resized_image)).type(torch.FloatTensor)
-    prediction = learned_model.infer(in_data)
-    print("Prediction: %s" % prediction)
-    return prediction
+    # Now we can send the image through the model and return the result
+    image_data = torch.from_numpy(np.array(resized_image)).type(torch.FloatTensor)
+    return learned_model.infer(image_data)

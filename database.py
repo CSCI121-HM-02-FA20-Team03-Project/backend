@@ -3,6 +3,7 @@ import string
 
 
 def fetch_from_database(conn, key):
+    """Get the image and LaTeX which is stored in the database, from the given key"""
     cur = conn.cursor()
     cur.execute("SELECT image, latex FROM Images WHERE id=(%s)", (key,))
     data = cur.fetchone()
@@ -14,10 +15,15 @@ key_letters = string.ascii_letters + string.digits + "+-"
 
 
 def random_key(length=8):
+    """Create a random key of the given length.
+
+    The key is a sequence of letters, numbers, and +/-.
+    """
     return "".join(random.choice(key_letters) for _ in range(length))
 
 
 def key_in_use(cur, key):
+    """Returns true iff the given key is already in the database"""
     cur.execute("SELECT COUNT(*) FROM Images WHERE id=(%s)", (key,))
     count = cur.fetchone()
     return count[0] != 0
@@ -42,6 +48,9 @@ def insert_into_database(conn, image, latex):
 
 
 def encode_hex(f):
+    """Takes a binary file and converts it into a hex-encoded string, in
+    the format used by PostreSQL.
+    """
     output = "\\x"
     while (byte := f.read(1)) :
         hex_byte = hex(ord(byte))[2:]
