@@ -66,12 +66,17 @@ def convertToBMP(image):
 
 
 def resizeImage(image):
-    average_area = 36881 # summed area of all trainig data images // number of images
-    current_image_area = image.size[0]*image.size[1]
+    average_area = 36881  # summed area of all trainig data images // number of images
+    current_image_area = image.size[0] * image.size[1]
 
     scale_percent = np.sqrt(current_image_area / average_area)
 
-    resized_image = image.resize((round(image.size[0]*(1/scale_percent)), round(image.size[1]*(1/scale_percent))))
+    resized_image = image.resize(
+        (
+            round(image.size[0] * (1 / scale_percent)),
+            round(image.size[1] * (1 / scale_percent)),
+        )
+    )
     return resized_image
 
 

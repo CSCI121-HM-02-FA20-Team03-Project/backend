@@ -30,7 +30,7 @@ def ephemeral():
 
     It will return a 400 error if the user didn't supply an image or if the
     image is invalid. If the user sends a GET request to this URL, then we
-    redirect them to the 
+    redirect them to the
     """
     if request.method == "POST":
         try:
@@ -82,6 +82,7 @@ def download():
 
 
 learned_model = InferModel()
+
 
 def get_model_output(image):
     """Call the model and get the result, for the provided image"""
