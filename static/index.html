@@ -18,7 +18,7 @@
         <button style="font-size: 14px" type="submit">Upload</button>
     </form>
 
-    <p style="padding-top: 50px; font-size: 14px;"> Uploaded Image: </p>
+    <p id="textForUpload" style="visibility: hidden; padding-top: 50px; font-size: 14px;"> Uploaded Image: </p>
     <img style="display: block;" id="image" width="200"> </img>
 
     <h2>What is this?</h2>
@@ -57,9 +57,16 @@
 </div>
 
 <div id="right" style="display: inline-block; float: left; margin-top: 10px; margin-bottom: 10px; margin-left: 100px;">
-    <p style="display: block;">Latex Code Output: <span contentEditable="true" id="code"
-                                                                                style="display: inline-block; border:1px; border-style:solid; border-color:#ffffff; padding-right: 5px; padding-top: 2.5px; padding-bottom: 2.5px; padding-left: 5px;"></span>
+    <div style="display: block; margin-bottom: 20px;">
+    <p style="display: inline;">Latex Code Output: <input type="text" id="code" value="" style="display: inline-block;  padding-right: 5px; padding-top: 2.5px; padding-bottom: 2.5px; padding-left: 5px;">
     </p>
+    <div class="tooltip">
+        <button onclick="copy()" onmouseout="outFunc()">
+          <span class="tooltiptext" id="myTooltip">Copy to clipboard</span>
+          Copy text
+          </button>
+    </div>
+    </div>
     <button style="display: inline; margin-left:10px;" type="button" onclick="compile()">Compile LaTeX</button>
     <button style="display: inline; margin-left:1px;" type="button" onclick="wolfram()">Send To Wolfram Alpha</button>
     <button style="display: inline; margin-left:1px;" type="button" onclick="save_permalink()">Save Result</button>
