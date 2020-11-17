@@ -39,7 +39,6 @@ function uploadImage() {
     const formData = new FormData();
     if (files.length == 0) {
         document.getElementById('code').value = 'No Image Uploaded, please try again!';
-        document.getElementById('code').style.width = ((document.getElementById('code').value.length + 1) * 8) + 'px';
         return false;
     }
     var image = document.getElementById('image');
