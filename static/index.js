@@ -60,6 +60,7 @@ function uploadImage() {
             document.getElementById('error').innerHTML = "";
             return response.text().then((response_text) => {
                 document.getElementById('code').value = response_text;
+                document.getElementById('code').style.width = ((document.getElementById('code').value.length + 1) * 8) + 'px';
             });
         } else {
             // The request failed, so let's send the error to the user
