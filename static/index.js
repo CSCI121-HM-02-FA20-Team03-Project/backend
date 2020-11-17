@@ -12,13 +12,12 @@ async function compile() {
     document.getElementById('compile').src = String.raw`https://latex.codecogs.com/png.latex?\dpi{400}${latex}`;
     
     setTimeout(function(){
+        var width = document.getElementById('compile').clientWidth;
+        var height = document.getElementById('compile').clientHeight;
+        document.getElementById("compileDiv").style.width = `${width + 30}px`;
+        document.getElementById("compileDiv").style.height = `${height + 30}px`;
         document.getElementById("compileDiv").style.visibility = "visible";
     }, 2000);
-
-    var width = document.getElementById('compile').clientWidth;
-    var height = document.getElementById('compile').clientHeight;
-    document.getElementById("compileDiv").style.width = `${width + 30}px`;
-    document.getElementById("compileDiv").style.height = `${height + 30}px`;
 }
 
 // Send the LaTeX to wolfram alpha and display the result to the user
