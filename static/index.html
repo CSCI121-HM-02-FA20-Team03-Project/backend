@@ -10,24 +10,50 @@
 <center>
     <h1 style="margin-bottom: 2.5%;">Math to Latex!</h1>
 </center>
-<div id="left" style="display: inline-block; float: left; width: 450px; margin-left: 5%;>">
+<div id="left" style="display: inline-block; float: left; width: 450px; margin-left: 5%; font-size: 12px;">
 
     <form id="image-upload-form" name="myForm" onsubmit="return uploadImage()" method="POST" onchange="change()">
         <input type="file" id="img" name="image" accept="image/*">
-        <p id="drag">Drag your files here or click in this area.</p>
-        <button type="submit">Upload</button>
+        <p style="font-size: 16px" id="drag">Drag your image here or click in this area.</p>
+        <button style="font-size: 14px" type="submit">Upload</button>
     </form>
 
-    <p style="padding-top: 50px;"> Uploaded Image: </p>
+    <p style="padding-top: 50px; font-size: 14px;"> Uploaded Image: </p>
     <img style="display: block;" id="image" width="200"> </img>
 
     <h2>What is this?</h2>
     <p>This is a site where you can upload an image of a mathematical expression and it will give you the LaTeX code that would produce that equation!
     </p>
-    <h2>How to use:</h2>
-    <p></p>
+    <h2>About us</h2>
+    <p>Hello! We are 4 Computer Science students in the Software Development Class at Harvey Mudd College and created this web app as our project for the class.</p>
+
+    <p>During our time as Computer Science majors, we have had to write up homework for different classes using LaTeX, but we’ve learned that it can be a very time consuming task. Thus, we have created a website where you can upload an image and it will actually give you the LaTeX code, cutting the time spent exponentially!</p>
+    <h2>How to Use</h2>
+    <p>1. To select the image you would like to convert to LaTeX, either click and drag an image into the box that says “Drag your files here or click in this area”, or click inside the box and your File Explorer will pop up, allowing you to upload an image.</p>
+    <p>2. Once you have selected your image, an Upload button will show up that you will need to click in order to send the </p>
     <h2>FAQs:</h2>
-    <p></p>
+    <p>
+        Q: Can I upload more than one image at a time?
+    </p>
+    <p>
+        A: No you cannot. 
+    </p>
+    <p>
+        Q: Where did you get the model from? 
+    </p>
+    <p>
+        A: You can look at it here if you’re interested: <a href="https://github.com/fqin987/Math_to_latex ">https://github.com/fqin987/Math_to_latex</a>
+    </p>
+    <p>
+        Q: Is there any way that I can save the output?
+    </p>
+    <p>
+        A: We provide a permalink that you can copy to your clipboard
+    </p>
+    <p>
+        Q:
+        A:
+    </p>
 </div>
 
 <div id="right" style="display: inline-block; float: right; margin-top: 10px; margin-bottom: 10px; padding-right: 5%;">
