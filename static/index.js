@@ -10,12 +10,15 @@ function change() {
 async function compile() {
     var latex = document.getElementById('code').innerHTML;
     document.getElementById('compile').src = String.raw`https://latex.codecogs.com/png.latex?\dpi{400}${latex}`;
-    await new Promise(r => setTimeout(r, 1000));
+    
+    setTimeout(function(){
+        document.getElementById("compileDiv").style.visibility = "visible";
+    }, 2000);
+
     var width = document.getElementById('compile').clientWidth;
     var height = document.getElementById('compile').clientHeight;
     document.getElementById("compileDiv").style.width = `${width + 30}px`;
     document.getElementById("compileDiv").style.height = `${height + 30}px`;
-    document.getElementById("compileDiv").style.visibility = "visible";
 }
 
 // Send the LaTeX to wolfram alpha and display the result to the user
