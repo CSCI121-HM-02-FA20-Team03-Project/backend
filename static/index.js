@@ -31,7 +31,8 @@ function wolfram() {
 // Take the provided image and send it to the server to convert to LaTeX,
 // then get the result and display it
 function uploadImage() {
-    document.getElementById('code').innerHTML = 'Loading...';
+    document.getElementById('code').value = 'Loading...';
+    document.getElementById('textForUpload').style.visibility = "visible";
     document.getElementById("drag").innerHTML = "Drag your files here or click in this area."; 
     // Add the image to the request
     const files = document.querySelector('[type=file]').files;
@@ -57,7 +58,6 @@ function uploadImage() {
         if (response.status == 200) {
             // The request worked
             document.getElementById('error').innerHTML = "";
-            document.getElementById('textForUpload').style.visibility = "visible";
             return response.text().then((response_text) => {
                 document.getElementById('code').value = response_text;
             });
