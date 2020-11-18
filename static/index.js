@@ -8,6 +8,7 @@ function change() {
 
 // Take the LaTeX code and compile it into an image
 async function compile() {
+    document.getElementById("compText").innerHTML = "Re-Compile LaTeX"
     var latex = document.getElementById('code').value;
     document.getElementById('compile').src = String.raw`https://latex.codecogs.com/png.latex?\dpi{400}${latex}`;
     
