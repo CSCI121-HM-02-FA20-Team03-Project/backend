@@ -34,7 +34,7 @@ function uploadImage() {
     document.getElementById('code').value = 'Loading...';
     document.getElementById('code').style.width = ((document.getElementById('code').value.length + 1) * 8) + 'px';
     document.getElementById('textForUpload').style.visibility = "visible";
-    document.getElementById("drag").innerHTML = "Drag your image here or click in this area."; 
+    document.getElementById("drag").innerHTML = "Drag your image or click in the area"; 
     // Add the image to the request
     const files = document.querySelector('[type=file]').files;
     const formData = new FormData();
