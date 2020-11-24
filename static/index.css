@@ -2,6 +2,8 @@ a {
     color: #ffffff;
 }
 
+#code{ font-size:0.8em; padding:.5em; width: 200px; }
+
 body {
     background: rgba(0, 0, 0, 0.9);
     font-family: "Courier New";
