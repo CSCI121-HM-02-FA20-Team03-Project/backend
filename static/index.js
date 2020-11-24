@@ -128,6 +128,7 @@ function save_permalink() {
         if (response.status == 200) {
             document.getElementById('error').innerHTML = "";
             return response.text().then((response_text) => {
+                document.getElementById("perma").style.visibility = "visible";
                 document.getElementById('permalink').innerHTML = "https://image-to-latex-backend.herokuapp.com/static/index.html?image=" + response_text;
                 document.getElementById('permalink').href = "https://image-to-latex-backend.herokuapp.com/static/index.html?image=" + response_text;
             });
