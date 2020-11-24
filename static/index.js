@@ -41,7 +41,6 @@ function wolfram() {
 // then get the result and display it
 function uploadImage() {
     document.getElementById('code').value = 'Loading...';
-    document.getElementById('code').style.width = ((document.getElementById('code').value.length + 1) * 8) + 'px';
     document.getElementById('textForUpload').style.visibility = "visible";
     document.getElementById("drag").innerHTML = "Drag your image or click in the area"; 
     // Add the image to the request
@@ -49,7 +48,6 @@ function uploadImage() {
     const formData = new FormData();
     if (files.length == 0) {
         document.getElementById('code').value = 'No Image Uploaded, please try again!';
-        document.getElementById('code').style.width = ((document.getElementById('code').value.length + 1) * 8) + 'px';
         return false;
     }
     var image = document.getElementById('image');
@@ -71,7 +69,6 @@ function uploadImage() {
             document.getElementById('error').innerHTML = "";
             return response.text().then((response_text) => {
                 document.getElementById('code').value = response_text;
-                document.getElementById('code').style.width = ((document.getElementById('code').value.length + 1) * 8) + 'px';
             });
         } else {
             // The request failed, so let's send the error to the user
@@ -156,7 +153,6 @@ function fetch_key() {
             response.text().then((response_text) => {
                 var body = JSON.parse(response_text);
                 document.getElementById('code').value = body.latex;
-                document.getElementById('code').style.width = ((document.getElementById('code').value.length + 1) * 8) + 'px';
                 document.getElementById('image').src = 'data:image;base64,' + body.image;
                 document.getElementById('permalink').innerHTML = "Permalink to this result: https://image-to-latex-backend.herokuapp.com/static/index.html?image=" + params.get("image");
             });
